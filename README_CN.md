@@ -1,48 +1,47 @@
 # hexo-issue2readme
 [![NPM version](https://badge.fury.io/js/hexo-issue2readme.svg)](https://www.npmjs.com/package/hexo-issue2readme)
 
-##### [中文](./README_CN.md)
+##### [English](./README.md)
 
-auto generator readme file for hexo blog from github issues.
+把issue上面的文章生成到readme文档中
 
-It generator a readme file thant you can store it in your git repository.
+你可以把这个文档放置在你的仓库里
 
-### features
+### 特性
 
-* custom readme template by nunjucks
-* issue label filter able
-* issue label custom sort
+* 自定义readme模板,使用的是nunjucks模板引擎
+* 只生成指定含有指定标签的issue
+* issue标签顺序可自定义
 
-### Installation
+### 安装
 
 ```shell
 npm i hexo-issue2readme -S
 ```
 
-### Oportions
+### 配置
 
-Add or modify the following sections to you root _config.yml file:
+修改或者添加以下配置在根目录的`_config.yml文件中`
 
 ```yaml
 issue2readme:
-  owner: buxuku # your github owner
-  repo: github-api # your github repo
-  auth: xxxx # your github auth token. also can get from process.env.GITHUB_TOKEN
-  template: readme.njk # readme template default: readme.njk
-  labels: # only include those labels issues will generated in readme
+  owner: buxuku # github 拥有者
+  repo: github-api # github仓库名
+  auth: xxxx # github auth token. 也可以通过环境变量 `process.env.GITHUB_TOKEN`来获取
+  template: readme.njk # readme模板文件名, 默认: readme.njk
+  labels: # 需要展示的标签数据,只有打了这些标签的issue才会展示到readme中
     - frontend
     - python
 ```
 
-### Usage
+### 使用
 
 ```shell
 hexo issue2readme
 ```
 
 
-You should create a readme template in then hexo root path. in the template ,you can use the moment function and a list data like: 
-
+你需要创建一个模板文件放在hexo的根目录下面,在模板文件里,你可以使用`moment`方法,以及一个列表数据,列表数据大概长成这个样子
 ```json
 [
   {
@@ -210,7 +209,7 @@ You should create a readme template in then hexo root path. in the template ,you
 ]
 ```
 
-eg: a readme template like this :
+比如readme模板文件可以这样 :
 
 ```template
 {%- for c in labels %}
@@ -221,21 +220,20 @@ eg: a readme template like this :
 {%- endfor %}
 ```
 
-this will build a `README.md` like [github.com/buxuku/buxuku.github.io](https://github.com/buxuku/buxuku.github.io)
+ 可以参考 [github.com/buxuku/buxuku.github.io](https://github.com/buxuku/buxuku.github.io)
 
 
-### important
+### 注意的点
 
-* you should generate a github token for this plug. [generate new token](https://github.com/settings/tokens). if you use this plug by a travis ci, you should not put your token anywhere in your repo.
-  you should export it as a environment variable, like `export GITHUB_TOKEN=xxx`;
+* 你需要在这里 [generate new token](https://github.com/settings/tokens) 为插件生成一个token. 如果你是通过tranvis ci工具来使用这个插件,你不应该把这个token放在你仓库的任何地方.
+  你应该把它导出为一个环境变量.就像`export GITHUB_TOKEN=xxx`这样.
 
-  if you use a travis ci (.com), you can add a secret environment variable like this:
-
+  如果你使用的是travis ci (.com),你可以通过以下的操作方法来生成一个安全的环境变量
 ```bash
 brew install travis
 travis login --pro --github-token xxxx 
 travis encrypt --pro GITHUB_TOKEN="xxx" --add
-```
+```  
 
 
 ## License
